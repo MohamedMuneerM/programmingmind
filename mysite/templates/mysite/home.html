@@ -1,0 +1,60 @@
+{% extends 'mysite/base.html' %}
+{% load static %}
+
+{% block title %}
+  <title>Programming Mind || Welcome</title>
+{% endblock %}
+
+{% block banner %}
+{% include 'mysite/snippets/banner.html' %}
+{% endblock banner %}
+
+{% block content %}
+
+<h2 class="my-4">Recent Tutorials</h2>
+			
+
+<div class="row row-cols-1 row-cols-md-3 scoped-card">
+  {% for series in tutorials %}
+  <div class="col col-md-6 col-lg-4 mb-4">
+    <div class="card h-100">
+      <img src="{{ series.get_photo_url }}" class="card-img-top" alt="{{ series.title }}">
+      <div class="card-body">
+        <h5 class="card-title">{{ series.title }}</h5>
+        <p class="card-text">{{ series.summary|safe }}</p>
+        <a class="btn btn-outline-primary stretched-link"href="{{ series.get_absolute_url }}">View</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+
+</div>
+
+<!--  sample recent posts --> 
+
+
+<h2 class="my-4 mb-4">Recent blogs</h2>
+
+<div class="row row-cols-1 row-cols-md-3 scoped-card">
+  {% for post in blog_posts %}
+  <div class="col col-md-6 col-lg-4 mb-4">
+    <div class="card h-100">
+      <img src="{{ post.get_photo_url }}" class="card-img-top" alt="{{ post.title }}">
+      <div class="card-body">
+        <h5 class="card-title">{{ post.title }}</h5>
+        <p class="card-text">{{ post.summary|safe }}</p>
+        <a class="btn btn-outline-primary stretched-link"href="{% url 'blogpost' post.slug %}">View</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+
+
+</div>
+
+</div>
+
+
+</div>
+
+{% endblock content %}

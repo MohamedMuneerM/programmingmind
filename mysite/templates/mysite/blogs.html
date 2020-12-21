@@ -1,0 +1,53 @@
+{% extends 'mysite/base.html' %}
+{% block title %}
+	<title>Blog Posts | Programming Mind</title>
+{% endblock %}
+
+
+
+{% block content %}
+	<style>
+		.margin{
+			margin-top: 50px;
+		}
+	</style>
+
+
+	<div class="scoped-card">
+		<form class="margin" action="{% url 'search_results' %}"  method="get">
+	      <div class="p-1 bg-light rounded rounded-pill shadow-sm mb-4">
+	        <div class="input-group">
+	          <input type="search" name="q" placeholder="What are you searching for?" aria-describedby="button-addon1" class="form-control border-0 bg-light" required>
+	          <div class="input-group-append">
+	            <button id="button-addon1" type="submit" class="btn btn-link text-primary"><i class="fa fa-search"></i></button>
+	          </div>
+	        </div>
+	      </div>
+	    </form>
+
+
+		<h1 class="mb-4">blogs</h1>
+
+		{% for post in blogs %}
+		<div class="card w-100 mb-3">
+		  <div class="row no-gutters">
+		    <div class="col-md-4">
+		      <img class="w-100" src="{{ post.image.url }}" class="card-img" alt="{{ post.title }}">
+		    </div>
+		    <div class="col-md-8">
+		      <div class="card-body">
+		        <h5 class="card-title">{{ post.title }}</h5>
+		        <p class="card-text">{{ post.summary|safe }}</p>
+		        <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
+		        <a class="btn btn-outline-primary stretched-link"href="{{ post.get_absolute_url }}">View</a>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		{% endfor %}
+
+		{% include 'mysite/snippets/pagination.html' %}
+			</div>
+		<!-- Footer -->
+
+{% endblock content %}

@@ -1,0 +1,243 @@
+{% extends 'mysite/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+  <title>{{ blogpost.title|title }} | Programming Mind</title>
+{% endblock %}
+
+
+{% block meta %}
+  <meta name="description" content="{{ blogpost.summary|striptags }}" />
+  <link rel="canonical" href="{{ request.build_absolute_uri }}" />
+  <meta property=”og:type” content="article" />
+  <meta property="og:description" content="{{ blogpost.summary|striptags }}" />
+  <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+  <meta property="og:site_name" content="Programming Mind" />
+  <meta property="og:image" content="{{ blogpost.get_photo_url }}" />
+  <meta property="og:image:secure_url" content="{{ blogpost.get_photo_url }}" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+{% endblock meta %}
+
+
+
+{% block content %}
+
+    <style>
+
+      img {
+          max-width: 100%;
+          height: auto;
+        
+      }
+
+
+      .img-circular-comment{
+          height: 50px;
+          width:  50px;
+          border-radius: 50%;
+          object-fit: cover;
+          text-align: center;
+        }
+
+     
+     </style>
+
+<!-- Main -->
+ <div class="">
+
+    <div class="row">
+
+      <!-- Post Content Column -->
+      <div class="col-lg-8 text-para">
+
+        <form class="margin d-xl-none d-lg-none" action="{% url 'search_results' %}"  method="get">
+          <div class="p-1 bg-light rounded rounded-pill shadow-sm mb-4">
+            <div class="input-group">
+              <input type="search" name="q" placeholder="What are you searching for?" aria-describedby="button-addon1" class="form-control border-0 bg-light" required>
+              <div class="input-group-append">
+                <button id="button-addon1" type="submit" class="btn btn-link text-primary"><i class="fa fa-search"></i></button>
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <!-- Title -->
+        <h1 class="mt-4 mr-3">{{ blogpost.title }}</h1>
+
+
+        <!-- Date/Time -->
+        <p class="my-4">Posted on {{ blogpost.date_published|date:"M. d, Y"  }}</p>
+
+        <hr>
+
+        {% if blogpost.has_yt_link %}
+
+        <div class="embed-responsive embed-responsive-16by9">
+          <iframe class="embed-responsive-item" src="{{ blogpost.youtube_link }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen> </iframe>
+        </div>
+
+        {% endif %}
+
+
+
+        <!-- Main Content -->
+
+        <div >
+          {{ blogpost.content|safe }}
+        </div>
+        <hr>
+
+        <!-- Comments Form -->
+
+
+        <div class="next">
+            <small>Suggested Posts</small>
+            <div>
+            {% for feature in featured_posts %}  
+                 <a class="my-2 btn btn-info" href="{{ feature.get_absolute_url }}">{{ feature.title }}</a>
+            {% endfor %}
+            </div>
+
+        </div>
+
+        <div class="card my-4">
+          <h5 class="card-header">Leave a comment</h5>
+            <div class="card-body">
+              <ul class="list-group list-group-flush">
+                   <form method="POST" action="{% url 'blogpost' post_slug %}">{% csrf_token %}
+                    <div class="form-group">
+                      {{ form|crispy }}
+                    </div>
+                    <input class="btn btn-primary mx-auto d-flex justify-content-md-center" type="submit" value="Submit">
+                  </form>
+              </ul>
+          </div>
+        </div>
+              
+        <!-- Single Comment -->
+        {% for comment in comments %}
+        <div class="media mb-4" id="{{ comment.user.username }}-{{ comment.content }}">
+          <img class="d-flex mr-3 img-circular-comment" src="{{  comment.user.profile.image.url  }}" alt="{{ commment.user.username }} profile image">
+          <div class="media-body">
+            <h5 class="mt-0">{{ comment.user.username }}</h5>
+            <span style="" class="text-muted"><small class="text-muted">{{ comment.timestamp|timesince }} ago {% if comment.children.count > 0 %}| {{ comment.children.count }} Comment{% if comment.children.count > 1 %}s{% endif %}{% endif %}</small>
+            {% if request.user == comment.user %}
+            | <form class=" d-inline" method="POST" action="{% url 'post-delete' comment.id %}">
+                  {% csrf_token %}
+                  <input type="hidden" name="path" value="{{ blogpost.get_absolute_url }}">
+                  <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+            </form>
+            {% endif %}
+            </span>
+            <div class="mt-2">{{ comment.content }}</div>
+            <hr>
+            <div class="comment-reply">
+
+                {% for child in comment.children %}
+                
+                <div class="media mt-4" id="{{ child.user.username }}-{{ child.content }}">
+                  <img class="d-flex mr-3 img-circular-comment" src="{{ child.user.profile.image.url }}" alt="{{ child.user.username }} profile image">
+                  <div class="media-body">
+                    <h5 class="mt-0">{{ child.user.username }}</h5>
+                    <small class="text-muted">{{ child.timestamp|timesince }} ago
+                      | <form class="d-inline" method="POST" action="{% url 'post-delete' child.id %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="path" value="{{ blogpost.get_absolute_url }}">
+                        <button class="btn btn-danger btn-sm" type="submit">Delete</button> 
+                    
+                  </form>
+                    </small>
+
+                    <div class="mt-2">{{ child.content }}</div>
+                 
+                  </div>
+                </div>
+                <hr>
+                {% endfor %}
+
+
+
+                <form method="POST" action=""> {% csrf_token %}
+                  {{ form|crispy }}
+                  <input type='hidden' name='parent_id' value='{{ comment.id }}'>
+                  <div class="d-flex justify-content-end">
+                  <input type='submit' value='Reply' class='btn btn-primary'>
+                  </div>
+              </form>
+            </div>
+          </div>
+        </div>
+       
+        {% endfor %}
+
+
+
+      </div>
+
+      <!-- Sidebar Widgets Column -->
+      <div class="col-lg-4">
+
+        <!-- Search Widget -->
+        <div class="card my-4 d-none d-lg-block">
+          <h5 class="card-header">Search</h5>
+          <div class="card-body">
+            <div class="">
+              <form action="{% url 'search_results' %}"  method="get">
+                <input type="text" class="form-control" name="q" placeholder="Search for..." required>
+                  <button class="d-block d-md-none btn btn-secondary my-2 d-flex justify-content-md-center mx-auto" type="submit">Go!</button>
+              </form>
+              
+              
+            </div>
+            <!-- <button style="text-align: center; justify-content: center; padding: 10px;" class="btn btn-primary mx-auto" type="button">Go!</button> -->
+          </div>
+        </div>
+
+
+        {% if similar_posts.count > 0 %}
+        <div class="card my-4 d-none d-lg-block">
+          <h5 class="card-header">Similar Posts</h5>
+            <ul class="list-group list-group-flush">
+                {% for post in similar_posts %}
+      			    <li class="list-group-item"><a href="{% url 'blogpost' post.slug  %}">{{ post.title }}</a></li>
+                {% endfor %}
+      			</ul>
+        </div>
+        {% else %}
+        {% endif %}
+
+        {% if trending_posts.count > 0 %}
+        <div class="card my-4 d-none d-lg-block">
+          <h5 class="card-header">Trending Posts</h5>
+            <ul class="list-group list-group-flush">
+              {% for post in trending_posts %}
+    			    <li class="list-group-item"><a href="{% url 'blogpost' post.slug  %}">{{ post.title }}</a></li>
+    			    <!-- <li class="list-group-item"><a href="">What is the differnce in class views and function views in django</a></li> -->
+    			    {% endfor %} 
+          </ul>
+        </div>
+        {% else %}
+        {% endif %}
+
+        {% if featured_posts.count > 0 %}
+        <div class="card my-4 d-none d-lg-block">
+          <h5 class="card-header">Featured Posts</h5>
+            <ul class="list-group list-group-flush">
+              {% for post in featured_posts %}
+    			       <li class="list-group-item"><a href="{% url 'blogpost' post.slug  %}">{{ post.title }}</a></li>
+              {% endfor %}
+
+			     </ul>
+        </div>
+        {% else %}
+        {% endif %}
+      </div>
+
+    </div>
+    <!-- /.row -->
+
+  </div>
+
+		<!-- Footer -->
+{% endblock content %}

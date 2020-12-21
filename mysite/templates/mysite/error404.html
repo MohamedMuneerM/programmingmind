@@ -1,0 +1,40 @@
+{% extends 'mysite/base.html' %}
+
+
+{% block title %}
+	<title>404 | Programming Mind</title>
+{% endblock %}
+
+<style>
+
+</style>
+
+
+
+{% block content %}
+
+<!-- style="position: absolute; top: 50%; left: 50%; -->
+	<div class="display-error" >
+		<div class="error-message">
+			<h1 class="text-center">404. Page Not Found</h1>
+		</div>
+		<form action="{% url 'search_results' %}"  method="get">
+	      <div class="p-1 bg-light rounded rounded-pill shadow-sm mb-4">
+	        <div class="input-group">
+	          <input type="search" name="q" placeholder="What' you searching for?" aria-describedby="button-addon1" class="form-control border-0 bg-light">
+	          <div class="input-group-append">
+	            <button id="button-addon1" type="submit" class="btn btn-link text-primary"><i class="fa fa-search"></i></button>
+	          </div>
+	        </div>
+	      </div>
+	    </form>
+	</div>
+
+
+
+
+
+
+		
+
+{% endblock content %}

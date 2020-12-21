@@ -1,0 +1,82 @@
+{% extends 'mysite/base.html' %}
+
+
+{% block title %}
+	 <title>Connect | Programming Mind</title>
+{% endblock %}
+
+
+{% block content %}
+
+<style>
+
+	.text-para{
+		color: #222;
+		font-family: helvetica;
+		line-height: 1.6;
+    	font-weight: 400;
+		font-size: 1.2em;
+
+	}
+
+	.mrg{
+		margin-bottom: 20px;
+	}
+
+
+
+
+</style>
+
+<h1 class="my-3 text-center mrg">Where to find us</h1>
+<div  class="row my-4">
+
+	
+	<div class=" w-100 mb-3 h-100">
+	  <div class="row no-gutters">
+	    <div class="col-md-4">
+	      <img class="w-100" src="https://tse3.mm.bing.net/th?id=OIP.Sd6gdOH4Gsw_aO1DUdtcyQHaDy&pid=Api&P=0&w=312&h=160" class="card-img" alt="Youtube image">
+	    </div>
+	    <div class="col-md-8">
+	      <div class="card-body">
+	        <h5 class="card-title">Youtube</h5>
+	        <p class="card-text">You can find us here...</p>
+	        <a target="_blank" class="btn btn-outline-primary"href="{{ connections.youtube }}">GO</a>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<div class=" w-100 mb-3 h-100">
+	  <div class="row no-gutters">
+	    <div class="col-md-4">
+	      <img class="w-100" src="https://tse1.mm.bing.net/th?id=OIP.mtsk3fQ_BRemFidhkel3dAHaEK&pid=Api&P=0&w=328&h=185" class="card-img" alt="Github image">
+	    </div>
+	    <div class="col-md-8">
+	      <div class="card-body">
+	        <h5 class="card-title">Github</h5>
+	        <p class="card-text">You can find us here..</p>
+	        <a target="_blank" class="btn btn-outline-primary"href="{{ connections.github }}">GO</a>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<div class=" w-100 mb-3 h-100">
+	  <div class="row no-gutters">
+	    <div class="col-md-4">
+	      <img class="w-100" src="https://tse3.mm.bing.net/th?id=OIP.Cy5FD0XIov5y-Wfm1H30BQHaEK&pid=Api&P=0&w=287&h=162" class="card-img" alt="Instagram image">
+	    </div>
+	    <div class="col-md-8">
+	      <div class="card-body">
+	        <h5 class="card-title">Instagram</h5>
+	        <p class="card-text">You can find us here...</p>
+	        <a target="_blank" class="btn btn-outline-primary"href="{{ connections.instagram }}">GO</a>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+</div>
+
+
+
+
+{% endblock content %}

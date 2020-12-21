@@ -1,0 +1,46 @@
+{% extends "mysite/base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}
+  <title> {{ user.username }} | Account | Programming Mind</title>
+{% endblock %}
+
+
+
+
+{% block content %}
+    <style>
+      .img-circular{
+          height: 300px;
+          width:  300px;
+          border-radius: 50%;
+          object-fit: cover;
+          text-align: center;
+        }
+    </style>
+
+    <section class="h-100 my-login-page " style="margin-top: 100px;">
+        <div class="">
+          <div class="row justify-content-md-center  h-100">
+            <div class="card-wrapper">
+
+                  <h4 style="text-align: center;"class="mb-4 card-title">Profile Info</h4>
+                  <img class="img-circular mx-auto d-flex justify-content-md-center" src="{{ user.profile.get_photo_url }}" alt="profile image">
+                  <form method="POST" class="my-login-validation" enctype="multipart/form-data">{% csrf_token %}
+                    {{ u_form|crispy }}
+                    {{ p_form|crispy }}
+                
+
+                    <div class="form-group m-0">
+                      <button type="submit" class="btn btn-primary btn-block">
+                        Update
+                      </button>
+                    </div>
+                  
+                  </form>
+                <!-- </div> -->
+              <!-- </div> -->
+            </div>
+          </div>
+        </div>
+      </section>
+{% endblock content %}

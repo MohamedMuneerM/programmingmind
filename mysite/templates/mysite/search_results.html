@@ -1,0 +1,132 @@
+{% extends 'mysite/base.html' %}
+
+{% block title %}
+  <title>Search results for {{ query }}</title>
+{% endblock %}
+
+
+
+
+
+{% block content %}
+
+    <style>
+
+     </style>
+
+<!-- Main -->
+ <div class="margin">
+   
+
+    <div class="row">
+
+
+      <!-- Post Content Column -->
+      <div class="col-lg-8 scoped-card">
+         <form class="margin" action="{% url 'search_results' %}"  method="get">
+        <div class="p-1 bg-light rounded rounded-pill shadow-sm mb-4">
+          <div class="input-group">
+            <input type="search" name="q" placeholder="What are you searching for?" aria-describedby="button-addon1" class="form-control border-0 bg-light required">
+            <div class="input-group-append">
+              <button id="button-addon1" type="submit" class="btn btn-link text-primary "><i class="fa fa-search"></i></button>
+            </div>
+          </div>
+        </div>
+      </form>
+
+
+
+        <!-- Title -->
+ 
+        {% if results %}
+      
+
+        {% for result in results %}
+        <div class="card w-100 mb-3">
+          <div class="row no-gutters">
+            <div class="col-md-4">
+              <img class="w-100" src="{{ result.get_photo_url }}" class="card-img" alt="{{ result.title }}">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title">{{ result.title }}</h5>
+                <p class="card-text">{{ result.summary|safe }}</p>
+                <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
+                <a class="btn btn-outline-primary stretched-link"href="{{ result.get_absolute_url }}">View</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+
+        {% else %}
+
+        <p class="ml-2">No Results Found</p>
+
+        {% endif %}
+    
+
+      </div>
+
+      <!-- Sidebar Widgets Column -->
+      <div class="col-md-4 d-none d-lg-block">
+
+        <!-- Search Widget -->
+       
+
+        <!-- Categories Widget -->
+       
+
+        <!-- Side Widget -->
+       <!--  <div class="card my-4">
+          <h5 class="card-header">Side Widget</h5>
+          <div class="card-body">
+            You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers!
+          </div>
+        </div> -->
+        {% if similar_posts.count > 0 %}
+        <div class="card my-4">
+          <h5 class="card-header">Similar Posts</h5>
+            <ul class="list-group list-group-flush">
+                {% for post in similar_posts %}
+      			    <li class="list-group-item"><a href="{% url 'blogpost' post.slug  %}">{{ post.title }}</a></li>
+                {% endfor %}
+      			</ul>
+        </div>
+        {% else %}
+        {% endif %}
+
+        {% if trending_posts.count > 0 %}
+        <div class="card my-4">
+          <h5 class="card-header">Trending Posts</h5>
+            <ul class="list-group list-group-flush">
+              {% for post in trending_posts %}
+    			    <li class="list-group-item"><a href="{% url 'blogpost' post.slug  %}">{{ post.title }}</a></li>
+    			    <!-- <li class="list-group-item"><a href="">What is the differnce in class views and function views in django</a></li> -->
+    			    {% endfor %} 
+          </ul>
+        </div>
+        {% else %}
+        {% endif %}
+
+        {% if featured_posts.count > 0 %}
+        <div class="card my-4">
+          <h5 class="card-header">Featured Posts</h5>
+            <ul class="list-group list-group-flush">
+              {% for post in featured_posts %}
+    			       <li class="list-group-item"><a  href="{% url 'blogpost' post.slug  %}">{{ post.title }}</a></li>
+              {% endfor %}
+
+			     </ul>
+        </div>
+        {% else %}
+        {% endif %}
+      </div>
+
+    </div>
+    <!-- /.row -->
+    {% include 'mysite/snippets/search_pagination.html' %}
+
+  </div>
+		<!-- Footer -->
+{% endblock content %}

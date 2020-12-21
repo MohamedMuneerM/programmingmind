@@ -1,0 +1,23 @@
+<header id="header">
+	<div class="inner">
+		<a href="{% url 'home' %}" class="logo">Programming mind</a>
+		<nav id="nav">
+			<a href="{% url 'home' %}">Home</a>
+			<a href="{% url 'blogs' %}">Blog</a>
+			<a href="{% url 'tutorials' %}">Tutorials</a>
+			<a href="{% url 'categories' %}">Categories</a>
+			{% if user.is_admin %}
+				<a href="{% url 'notify' %}">notify</a>
+			{% endif %}
+			{% if user.is_authenticated %}
+				<a href="{% url 'account' %}">Account</a>
+				<a style="padding: 10px;" class="btn btn-danger" href="{% url 'logout' %}">Logout</a>
+			{% else %}
+				<a href="{% url 'login' %}">Login</a>
+				<a style="padding: 10px;" class="btn btn-danger" href="{% url 'register' %}">Sign Up</a>
+			{% endif %}
+
+		</nav>
+	</div>
+</header>
+<a href="#menu" class="navPanelToggle"><span class="fa fa-bars"></span></a>

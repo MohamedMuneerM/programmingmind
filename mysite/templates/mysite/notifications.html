@@ -1,0 +1,33 @@
+{% extends 'mysite/base.html' %}
+
+{% block content %}
+
+
+{% load notifications_tags %}
+
+{% comment %}
+<ul>
+	{% for notification in notifications %}
+		<li>{{ notification.sender.username }}--{{ notification.content }}</li>
+		<a href="{{ notification.post_url.get_absolute_url }}">link</a>
+
+	{% endfor %}
+</ul>
+
+{% endcomment %}
+
+{% notifications_unread as unread_count %}
+{% if unread_count %}
+    You have <strong>{{ unread_count }}</strong> unread notifications.
+{% endif %}
+
+<ul>
+	{% for message in messages %}
+		<li>{{ message }}</li>
+
+	{% endfor %}
+</ul>
+
+
+
+{% endblock %}

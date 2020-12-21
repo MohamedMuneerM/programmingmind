@@ -1,0 +1,29 @@
+{% extends 'mysite/base.html' %}
+
+{% block title %}
+  <title>Notifications | Programming Mind</title>
+{% endblock %}
+
+
+
+{% block content %}
+
+<div style="margin-top: 50px;">
+	{% for i in notifications %}
+	<div class="row scoped-card">
+		<div class="card w-100 mb-3 h-100">
+		  <div class="row no-gutters">
+		    <div class="col-md-8">
+		      <div class="card-body">
+		        <h5 class="card-title">Comment by {{ i.user.username }}</h5>
+		        <p class="card-text">{{ i.content }}</p>
+		        <a class="btn btn-outline-primary stretched-link"href="{{ i.post_url }}#{{ i.user.username }}-{{ i.content }}">View</a>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+	</div>
+	{% endfor %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'mysite/base.html' %}
+
+{% block title %}
+    <title>About | Programming Mind</title>
+{% endblock %}
+
+
+
+{% block content %}
+
+<style>
+	 img {
+          max-width: 100%;
+          height: auto;
+        
+    }
+
+
+</style>
+
+
+<div class="text-para">
+	<p>
+		{{ about_page.content|safe }}
+	</p>
+	
+</div>
+
+
+
+
+{% endblock content %}
