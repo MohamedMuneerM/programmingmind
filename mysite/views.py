@@ -104,7 +104,7 @@ class SuggestionFormView(CreateView):
 
 class ConnectPage(TemplateView):
 	model = Connect
-	template_name = 'mysite/Connect.html'
+	template_name = 'mysite/connect.html'
 
 
 	def get_context_data(self,**kwargs):
