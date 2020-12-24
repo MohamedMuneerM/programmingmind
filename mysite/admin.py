@@ -79,7 +79,7 @@ admin.site.register(Comment,CommentAdmin)
 admin.site.register(AboutPage, AboutPageAdmin)
 admin.site.register(Suggetions)
 admin.site.register(Topic)
-
+admin.site.register(Profile)
 admin.site.register(NewsLetter)
 admin.site.register(User_Agreements)
 admin.site.register(Notification_Manual)
