@@ -26,9 +26,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY','863924df4f3ea2aa84c31aaf1fa65036ce17ec26ffa22bd4f277446000dd')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['www.programmingmind.tech','programmingmind.tech']
 
 ADMINS = [('muneer', 'mohammedmubeer4@gmail.com'),('programmingmind', 'rehanamujeebh@gmail.com')] 
 

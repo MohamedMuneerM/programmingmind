@@ -11,7 +11,9 @@
 
 {% block content %}
 
-<h2 class="my-4">Recent Tutorials</h2>
+{% if tutorials.count > 0 %}
+  <h2 class="my-4">Recent Tutorials</h2>
+{% endif %}
 			
 
 <div class="row row-cols-1 row-cols-md-3 scoped-card">
@@ -32,8 +34,9 @@
 
 <!--  sample recent posts --> 
 
-
-<h2 class="my-4 mb-4">Recent blogs</h2>
+{% if blog_posts.count > 0 %}
+  <h2 class="my-4 mb-4">Recent blogs</h2>
+{% endif %}
 
 <div class="row row-cols-1 row-cols-md-3 scoped-card">
   {% for post in blog_posts %}
