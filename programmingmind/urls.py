@@ -29,7 +29,7 @@ sitemaps = {
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/cpanel', admin.site.urls),
     path('',include('mysite.urls')),
     path('tinymce/', include('tinymce.urls')),
     path('login/', auth_views.LoginView.as_view(template_name='mysite/login.html'), name='login'),
