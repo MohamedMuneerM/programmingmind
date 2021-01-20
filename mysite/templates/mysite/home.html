@@ -1,6 +1,19 @@
 {% extends 'mysite/base.html' %}
 {% load static %}
 
+{% block meta %}
+    <meta name="description" content="We Teach all python related stuffs, Web-Development, and much more.." />
+    <link rel="canonical" href="{{ request.build_absolute_uri }}" />
+    <meta property=”og:type” content=”website” />
+    <meta property="og:description" content="We Teach all python related stuffs, Web-Development, and much more.." />
+    <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+    <meta property="og:site_name" content="Programming Mind" />
+    <meta property="og:image" content="" />
+    <meta property="og:image:secure_url" content="" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+{% endblock meta %}
+
 {% block title %}
   <title>Programming Mind || Welcome</title>
 {% endblock %}

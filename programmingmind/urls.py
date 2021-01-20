@@ -18,7 +18,15 @@ from django.urls import path,include
 from django.contrib.auth import views as auth_views
 from django.conf.urls import handler404, handler500
 from mysite import views as mysite_views
+from django.contrib.sitemaps.views import sitemap
+from mysite.sitemaps import BlogPostSitemap,TutorialSeriesSitemap
 # import notifications.urls
+
+sitemaps = {
+    "blogposts": BlogPostSitemap,
+    "tutorialseries":TutorialSeriesSitemap
+}
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -46,6 +54,8 @@ urlpatterns = [
              template_name='mysite/password_reset_complete.html'
          ),
          name='password_reset_complete'),
+
+    path("sitemap.xml", sitemap, {"sitemaps": sitemaps}, name="sitemap"),
     # path('inbox/notifications/', include(notifications.urls, namespace='notifications')),
 ]
 
