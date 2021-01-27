@@ -199,16 +199,22 @@ class HomePage(ListView):
 	def get_context_data(self, **kwargs):
 
 		context = super().get_context_data(**kwargs)
-		tutorial_series = TutorialSeries.objects.all().order_by('-id')
+		# tutorial_series = TutorialSeries.objects.all()[5].order_by('-id')
+
 		try:
-			context['blog_posts'] = BlogPost.objects.all().order_by('-id')[5]
+			context['tutorials'] = TutorialSeries.objects.all()[5].order_by('-id')
+		except:
+			context['tutorials'] = TutorialSeries.objects.all().order_by('-id')
+
+		try:
+			context['blog_posts'] = BlogPost.objects.all()[5].order_by('-id')
 		except:
 			context['blog_posts'] = BlogPost.objects.all().order_by('-id')
 
 		# li = [series.tutorial_set.first() for series in tutorial_series ]
 		# tutorials = zip(tutorial_series, li)
 
-		context['tutorials'] = tutorial_series
+		# context['tutorials'] = tutorial_series
 		return context
 
 
@@ -300,7 +306,7 @@ class TutorialDetailView(DetailView):
 
 		context['comments'] = tutorial.comments
 		try:
-			context['featured'] = TutorialSeries.objects.filter(is_featured=True).order_by('-date_published').exclude(slug=self.series.slug)[3]
+			context['featured'] = TutorialSeries.objects.filter(is_featured=True)[3].order_by('-date_published').exclude(slug=self.series.slug)
 		except:
 			context['featured'] = TutorialSeries.objects.filter(is_featured=True).order_by('-date_published').exclude(slug=self.series.slug)
 		
@@ -343,22 +349,22 @@ class BlogPostView(DetailView):
 		context['form'] = form
 		context['post_slug'] = self.posts.slug 
 		try:
-			context['categories'] = Topic.objects.all().order_by('-id')[6]
+			context['categories'] = Topic.objects.all()[6].order_by('-id')
 		except:
 			context['categories'] = Topic.objects.all().order_by('-id')	
 		try:
 			# add .exclude() for exluding self.post data i.e the post which the user is viewing
-			context['similar_posts'] = BlogPost.objects.filter(category__slug=post_category).exclude(slug=self.posts.slug)[7]
+			context['similar_posts'] = BlogPost.objects.filter(category__slug=post_category)[7].exclude(slug=self.posts.slug)
 		except:
 			context['similar_posts'] = BlogPost.objects.filter(category__slug=post_category).exclude(slug=self.posts.slug)
 
 		try:
-			context['featured_posts'] = BlogPost.objects.filter(is_featured =True).exclude(slug=self.posts.slug).order_by('id')[7]
+			context['featured_posts'] = BlogPost.objects.filter(is_featured =True)[7].exclude(slug=self.posts.slug).order_by('id')
 		except:
 			context['featured_posts'] = BlogPost.objects.filter(is_featured =True).exclude(slug=self.posts.slug).order_by('id')
 
 		try:
-			context['trending_posts'] = BlogPost.objects.all().order_by('-view_count').exclude(slug=self.posts.slug)[7]
+			context['trending_posts'] = BlogPost.objects.all().order_by('-view_count')[7].exclude(slug=self.posts.slug)
 
 		except:
 			context['trending_posts'] = BlogPost.objects.all().order_by('-view_count').exclude(slug=self.posts.slug)			
@@ -425,12 +431,12 @@ class SearchResultsView(ListView):
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
 		try:
-			context['featured_posts'] = BlogPost.objects.filter(is_featured =True).order_by('id')[7]
+			context['featured_posts'] = BlogPost.objects.filter(is_featured =True)[7].order_by('id')
 		except:
 			context['featured_posts'] = BlogPost.objects.filter(is_featured =True).order_by('id')
 
 		try:
-			context['trending_posts'] = BlogPost.objects.all().order_by('-view_count')[7].order_by('-id')
+			context['trending_posts'] = BlogPost.objects.all()[7].order_by('-view_count').order_by('-id')
 
 		except:
 			context['trending_posts'] = BlogPost.objects.all().order_by('-view_count').order_by('-id')
@@ -473,12 +479,12 @@ class CategoriesView(ListView):
 		context = super().get_context_data(**kwargs)
 		
 		try:
-			context['featured_posts'] = BlogPost.objects.filter(is_featured =True).order_by('id')[7]
+			context['featured_posts'] = BlogPost.objects.filter(is_featured =True)[7].order_by('id')
 		except:
 			context['featured_posts'] = BlogPost.objects.filter(is_featured =True).order_by('id')
 
 		try:
-			context['trending_posts'] = BlogPost.objects.all().order_by('-view_count')[7].order_by('-id')
+			context['trending_posts'] = BlogPost.objects.all()[7].order_by('-view_count').order_by('-id')
 
 		except:
 			context['trending_posts'] = BlogPost.objects.all().order_by('-view_count').order_by('-id')
@@ -503,12 +509,12 @@ class CategoryView(ListView):
 		context['category'] = category
 		
 		try:
-			context['featured_posts'] = BlogPost.objects.filter(is_featured =True).order_by('id')[7]
+			context['featured_posts'] = BlogPost.objects.filter(is_featured =True)[7].order_by('id')
 		except:
 			context['featured_posts'] = BlogPost.objects.filter(is_featured =True).order_by('id')
 
 		try:
-			context['trending_posts'] = BlogPost.objects.all().order_by('-view_count')[7].order_by('id')
+			context['trending_posts'] = BlogPost.objects.all()[7].order_by('-view_count').order_by('id')
 
 		except:
 			context['trending_posts'] = BlogPost.objects.all().order_by('-view_count').order_by('id')
