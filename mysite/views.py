@@ -446,7 +446,7 @@ class SearchResultsView(ListView):
 		return context
 
 	def get_queryset(self): # new
-		query = self.request.GET.get('q')
+		query = self.request.GET.get('q') if self.request.GET.get('q') is not None else ""
 
 		tutorials = TutorialSeries.objects.filter(
 			Q(title__icontains=query) |
