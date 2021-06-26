@@ -10,6 +10,8 @@ from django.conf import settings
 from django.core.files.storage import default_storage as storage
 from io import BytesIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
+from ckeditor.fields import RichTextField
+from ckeditor_uploader.fields import RichTextUploadingField
 import sys
 # from image_cropping import ImageRatioField
 # Create your models here.
@@ -37,7 +39,7 @@ class Suggetions(models.Model):
 
 
 class AboutPage(models.Model):
-	content = models.TextField()
+	content = RichTextUploadingField(extra_plugins=['uploadimage'])
 	updated = models.DateTimeField(auto_now=True) 
 
 class Test(models.Model):
@@ -134,13 +136,13 @@ class TutorialSeries(models.Model):
 
 class Tutorial(models.Model):
 	title = models.CharField(max_length=300)
-	summary = models.TextField(blank=True,null=True) 
+	summary = models.TextField(blank=True,null=True)
 	part_num = models.PositiveIntegerField(null=True,blank=True)
 	category = models.ForeignKey(TutorialSeries,null=True,blank=True,on_delete=models.SET_NULL)
 	youtube_link = models.URLField(max_length=2083,blank=True,null=True)
 	date_published = models.DateTimeField(auto_now_add=True)
 	slug = models.SlugField(max_length=300)
-	content = models.TextField()
+	content = RichTextUploadingField(extra_plugins=['uploadimage'])
 	view_count = models.IntegerField(default=0)
 
 
@@ -202,7 +204,7 @@ class BlogPost(models.Model):
 	summary = models.TextField(blank=True,null=True)
 	category = models.ForeignKey(BlogCategory,null=True,on_delete=models.SET_NULL)
 	topic = models.ManyToManyField(Topic)
-	content = models.TextField()
+	content = RichTextUploadingField(extra_plugins=['uploadimage'])
 	youtube_link = models.URLField(max_length=2083,blank=True,null=True)
 	image = models.ImageField(upload_to='images',null=True,blank=True)
 	date_published = models.DateTimeField(auto_now_add=True)

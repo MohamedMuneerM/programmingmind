@@ -29,31 +29,24 @@ class AboutPageAdmin(admin.ModelAdmin):
 
 class TutorialInline(admin.StackedInline):
 	model = Tutorial
-	formfield_overrides = {
-		models.TextField: {'widget': TinyMCE()},
-	}
-
 
 
 class TutorialSeriesAdmin(admin.ModelAdmin):
-	formfield_overrides = {
-		models.TextField: {'widget': TinyMCE()},
-	}
 	inlines = [TutorialInline]
 
-class TutorialAdmin(admin.ModelAdmin):
-	formfield_overrides = {
-		models.TextField: {'widget': TinyMCE()},
-	}
+# class TutorialAdmin(admin.ModelAdmin):
+# 	formfield_overrides = {
+# 		models.TextField: {'widget': TinyMCE()},
+# 	}
 
 
 
 
-class BlogPostAdmin(admin.ModelAdmin):
+# class BlogPostAdmin(admin.ModelAdmin):
 
-	formfield_overrides = {
-		models.TextField: {'widget': TinyMCE()},
-	}
+# 	formfield_overrides = {
+# 		models.TextField: {'widget': TinyMCE()},
+# 	}
 	
 
 
@@ -72,11 +65,11 @@ class CommentAdmin(admin.ModelAdmin):
 
 admin.site.register(TutorialSeries,TutorialSeriesAdmin)
 admin.site.register(Account, AccountAdmin)
-admin.site.register(Tutorial,TutorialAdmin)
-admin.site.register(BlogPost,BlogPostAdmin)
+admin.site.register(Tutorial)
+admin.site.register(BlogPost)
 admin.site.register(BlogCategory)
 admin.site.register(Comment,CommentAdmin)
-admin.site.register(AboutPage, AboutPageAdmin)
+admin.site.register(AboutPage)
 admin.site.register(Suggetions)
 admin.site.register(Topic)
 admin.site.register(Profile)

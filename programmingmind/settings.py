@@ -26,9 +26,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY','863924df4f3ea2aa84c31aaf1fa65036ce17ec26ffa22bd4f277446000dd')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['www.programmingmind.tech','programmingmind.tech']
+# ALLOWED_HOSTS = ['www.programmingmind.tech','programmingmind.tech']
 
 ADMINS = [('muneer', 'mohammedmubeer4@gmail.com'),('programmingmind', 'rehanamujeebh@gmail.com')] 
 
@@ -52,6 +52,8 @@ INSTALLED_APPS = [
 	'cloudinary',
 	'crispy_forms',
 	'tinymce',
+	'ckeditor',
+    'ckeditor_uploader',
 ]
 
 MIDDLEWARE = [
@@ -117,34 +119,19 @@ AUTH_PASSWORD_VALIDATORS = [
 	},
 ]
 
-TINYMCE_DEFAULT_CONFIG = {
-	'height': 360,
-	'width': 1000,
-	'cleanup_on_startup': True,
-	'custom_undo_redo_levels': 20,
-	'selector': 'textarea',
-	'theme': 'modern',
-	'plugins': '''
-			textcolor save link image media preview codesample contextmenu
-			table code lists fullscreen  insertdatetime  nonbreaking
-			contextmenu directionality searchreplace wordcount visualblocks
-			visualchars code fullscreen autolink lists  charmap print  hr
-			anchor pagebreak
-			''',
-	'toolbar1': '''
-			fullscreen preview bold italic underline | fontselect,
-			fontsizeselect  | forecolor backcolor | alignleft alignright |
-			aligncenter alignjustify | indent outdent | bullist numlist table |
-			| link image media | codesample |
-			''',
-	'toolbar2': '''
-			visualblocks visualchars |
-			charmap hr pagebreak nonbreaking anchor |  code |
-			''',
-	'contextmenu': 'formats | link image',
-	'menubar': True,
-	'statusbar': True,
+# CK EDITOR
+
+CKEDITOR_UPLOAD_PATH = "uploads/"
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'height': '100%',
+        'width': '100%',
+        'extra_plugins': ['uploadimage', 'Maximize'],
+    },
 }
+
 
 
 
@@ -202,10 +189,11 @@ USE_TZ = True
 
 #production settings
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
+if not DEBUG:
+	SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+	SECURE_SSL_REDIRECT = True
+	SESSION_COOKIE_SECURE = True
+	CSRF_COOKIE_SECURE = True
 
 
 
@@ -230,4 +218,4 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 STATIC_URL = '/static/'
 
 
-django_heroku.settings(locals())
+# django_heroku.settings(locals())
