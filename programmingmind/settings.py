@@ -157,7 +157,7 @@ CLOUDINARY_STORAGE = {
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 
-GOOGLE_RECAPTCHA_SECRET_KEY = '6Lffj_AZAAAAAJDjhlNVAk6zzXm4VmFWsU7PSbRq'
+GOOGLE_RECAPTCHA_SECRET_KEY = 'Your google recaptcha key'
 
 
 CACHES = {
